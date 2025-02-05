@@ -1,10 +1,23 @@
 <html>
     <body>
+        <!-- Border Images -->
+        <!-- <div class="border top-border">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTB6NHh6c2l0azBldGRxY2FldWJ6MGJsODJ5bDllMTZ0Z25seDY1aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/U7VI2RFA6VcH2Gm7H9/giphy.gif" alt="Hearts">
+        </div> -->
+        <div class="border bottom-border">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTB6NHh6c2l0azBldGRxY2FldWJ6MGJsODJ5bDllMTZ0Z25seDY1aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/U7VI2RFA6VcH2Gm7H9/giphy.gif" alt="Hearts">
+        </div>
+        <div class="border left-border">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTB6NHh6c2l0azBldGRxY2FldWJ6MGJsODJ5bDllMTZ0Z25seDY1aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/U7VI2RFA6VcH2Gm7H9/giphy.gif" alt="Cute Love">
+        </div>
+        <div class="border right-border">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTB6NHh6c2l0azBldGRxY2FldWJ6MGJsODJ5bDllMTZ0Z25seDY1aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/U7VI2RFA6VcH2Gm7H9/giphy.gif" alt="Cute Love">
+        </div>
+
         <div>
-            <br/><br/><br/><br/><br/><br/>
             <h1>Will you be my Valentine?</h1>
             <img id="valentineImage" src="https://i.pinimg.com/474x/3d/25/24/3d2524ca8cc3b47984896e3d8067895d.jpg" alt="Valentine's Day Image" style="max-width: 300px; height: auto;">
-            <br/><br/><br/>
+            <br/><br/>
             <button id="yesButton">Yes</button>
             <button id="noButton">No</button>
         </div>
@@ -32,6 +45,7 @@
                 overflow: hidden;
                 height: 100vh;
                 margin: 0;
+                position: relative;
             }
             h1 {
                 color: #ff477e;
@@ -77,10 +91,6 @@
             .popup-content h2 {
                 color: #ff477e;
             }
-            .popup-content p {
-                font-size: 18px;
-                color: #333;
-            }
             #closePopup {
                 background-color: #06d6a0;
                 color: white;
@@ -90,6 +100,58 @@
                 border-radius: 5px;
                 cursor: pointer;
                 margin-top: 10px;
+            }
+
+            /* Border Images Styling */
+            .border {
+                position: fixed;
+                width: 100%;
+                height: auto;
+                z-index: -1;
+                overflow: hidden;
+            }
+            .top-border {
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: space-around;
+            }
+            .bottom-border {
+                bottom: 0;
+                left: 0;
+                display: flex;
+                justify-content: space-around;
+            }
+            .left-border {
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: auto;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+            }
+            .right-border {
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: auto;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+            }
+            .border img {
+                max-width: 100px;
+                height: auto;
+                animation: float 3s infinite alternate ease-in-out;
+            }
+
+            /* Floating animation for fun */
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                100% { transform: translateY(10px); }
             }
         </style>
 
@@ -110,16 +172,8 @@
 
             var yesButton = document.getElementById("yesButton");
             var noButton = document.getElementById("noButton");
-            var valentineImage = document.getElementById("valentineImage");
 
-            var noTexts = ["Are you sure?", "Please give me a chance pookie", "Pookie please", "Don't do this to me :(", "You're breaking my heart", "I'm gonna cry"];
-            var imageSources = [
-                "https://ih1.redbubble.net/image.5361056193.9282/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.webp",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5fSM9Eky7NMG01xQHccKNo60201-kMPyw6g&s",
-                "https://imgcdn.sigstick.com/eY0NsKiq9vQxRkNbawIu/3-1.thumb128.png",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdk8NNLp2-5Z0Sx0AO8GiHMWpVdKuvfTadxA&s"
-            ];
-
+            // Move "No" button when mouse gets close
             document.addEventListener("mousemove", function(event) {
                 var rect = noButton.getBoundingClientRect();
                 var mouseX = event.clientX;
@@ -130,15 +184,12 @@
                 
                 var distance = Math.sqrt(Math.pow(mouseX - buttonX, 2) + Math.pow(mouseY - buttonY, 2));
 
-                if (distance < 100) { // If mouse gets close, move the button
+                if (distance < 100) { 
                     moveNoButton();
                 }
             });
 
             function moveNoButton() {
-                var randomIndex = Math.floor(Math.random() * noTexts.length);
-                noButton.innerText = noTexts[randomIndex];
-
                 var maxX = window.innerWidth - noButton.offsetWidth - 20;
                 var maxY = window.innerHeight - noButton.offsetHeight - 20;
 
@@ -147,38 +198,17 @@
 
                 noButton.style.left = newX + "px";
                 noButton.style.top = newY + "px";
-
-                var currentWidth = yesButton.offsetWidth;
-                var currentHeight = yesButton.offsetHeight;
-                yesButton.style.width = currentWidth + 20 + "px";
-                yesButton.style.height = currentHeight + 10 + "px";
-
-                var randomImageIndex = Math.floor(Math.random() * imageSources.length);
-                valentineImage.src = imageSources[randomImageIndex];
             }
 
             function confettiEffect() {
-                const confettiCount = 100;
-                for (let i = 0; i < confettiCount; i++) {
+                for (let i = 0; i < 100; i++) {
                     let confetti = document.createElement("div");
                     confetti.innerHTML = "❤️";
                     confetti.style.position = "fixed";
                     confetti.style.left = Math.random() * window.innerWidth + "px";
                     confetti.style.top = Math.random() * window.innerHeight + "px";
                     confetti.style.fontSize = Math.random() * 30 + 10 + "px";
-                    confetti.style.opacity = Math.random();
                     document.body.appendChild(confetti);
-
-                    let animation = confetti.animate([
-                        { transform: "translateY(0px)" },
-                        { transform: `translateY(${window.innerHeight}px)` }
-                    ], {
-                        duration: Math.random() * 3000 + 2000,
-                        iterations: 1,
-                        easing: "ease-in-out"
-                    });
-
-                    animation.onfinish = () => confetti.remove();
                 }
             }
         </script>
