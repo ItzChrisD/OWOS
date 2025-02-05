@@ -1,86 +1,185 @@
 <html>
     <body>
         <div>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <h1>Will you be my valentine?</h1>
+            <br/><br/><br/><br/><br/><br/>
+            <h1>Will you be my Valentine?</h1>
             <img id="valentineImage" src="https://i.pinimg.com/474x/3d/25/24/3d2524ca8cc3b47984896e3d8067895d.jpg" alt="Valentine's Day Image" style="max-width: 300px; height: auto;">
-            <br/>
-            <br/>
-            <br/>
+            <br/><br/><br/>
             <button id="yesButton">Yes</button>
-            <button id="no">No</button>
+            <button id="noButton">No</button>
         </div>
+
+        <!-- Custom Popup Modal -->
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <h2>Yay! 💖</h2>
+                <p>I love you! See you soon! 💕</p>
+                <img id="loveGif" src="https://i.pinimg.com/originals/04/d8/1e/04d81e26094bbc614e3e5fdbed64c3e6.gif" alt="Cute Love GIF" style="max-width: 200px; height: auto; display: none;">
+                <button id="closePopup">OK</button>
+            </div>
+        </div>
+
+        <!-- Background Music -->
+        <audio id="backgroundMusic" loop>
+            <source src="C:\Users\17608\Downloads\Alicia Keys - No One (Official Music Video).mp3" type="audio/mp3">
+        </audio>
 
         <style>
             body {
                 background: linear-gradient(to bottom, #f5cac3, #f7ede2);
-            }
-            div {
+                font-family: Arial, sans-serif;
                 text-align: center;
-                vertical-align: middle;
+                overflow: hidden;
+                height: 100vh;
+                margin: 0;
             }
             h1 {
                 color: #ff477e;
             }
             #yesButton {
                 background-color: #06d6a0;
-                transition: transform 0.3s;
-                margin-right: 10px;
+                transition: all 0.3s ease;
                 width: 120px;
                 font-size: 30px;
                 height: 40px;
                 color: #fff;
-                margin-left: -140px;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
             }
-            #no {
+            #noButton {
                 position: absolute;
                 background-color: #ef476f;
-                transition: transform 0.3s;
-                margin-left: 10px;
+                transition: transform 0.2s ease, top 0.2s ease, left 0.2s ease;
                 width: 120px;
-                /* font-size: 30px; */
                 height: 40px;
                 color: #fff;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+
+            /* Custom Popup Modal Styling */
+            .popup {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 320px;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+                padding: 20px;
+                text-align: center;
+                z-index: 1000;
+            }
+            .popup-content h2 {
+                color: #ff477e;
+            }
+            .popup-content p {
+                font-size: 18px;
+                color: #333;
+            }
+            #closePopup {
+                background-color: #06d6a0;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 16px;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 10px;
             }
         </style>
-        <script>
-            document.getElementById("yesButton").addEventListener("click", showAlert);
 
-            function showAlert() {
-                alert("I love you! See you soon <3");
-            }
+        <script>
+            document.getElementById("yesButton").addEventListener("click", function() {
+                document.getElementById("popup").style.display = "block";
+                document.getElementById("loveGif").style.display = "block"; // Show the GIF
+
+                var music = document.getElementById("backgroundMusic");
+                music.play().catch(error => console.log("Autoplay blocked by browser"));
+
+                confettiEffect();
+            });
+
+            document.getElementById("closePopup").addEventListener("click", function() {
+                document.getElementById("popup").style.display = "none";
+            });
 
             var yesButton = document.getElementById("yesButton");
-            var no = document.getElementById("no");
+            var noButton = document.getElementById("noButton");
             var valentineImage = document.getElementById("valentineImage");
 
             var noTexts = ["Are you sure?", "Please give me a chance pookie", "Pookie please", "Don't do this to me :(", "You're breaking my heart", "I'm gonna cry"];
-            var imageSources = ["https://ih1.redbubble.net/image.5361056193.9282/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.webp", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5fSM9Eky7NMG01xQHccKNo60201-kMPyw6g&s", "https://imgcdn.sigstick.com/eY0NsKiq9vQxRkNbawIu/3-1.thumb128.png", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdk8NNLp2-5Z0Sx0AO8GiHMWpVdKuvfTadxA&s"];
+            var imageSources = [
+                "https://ih1.redbubble.net/image.5361056193.9282/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.webp",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5fSM9Eky7NMG01xQHccKNo60201-kMPyw6g&s",
+                "https://imgcdn.sigstick.com/eY0NsKiq9vQxRkNbawIu/3-1.thumb128.png",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdk8NNLp2-5Z0Sx0AO8GiHMWpVdKuvfTadxA&s"
+            ];
 
-            no.addEventListener("click", change);
+            document.addEventListener("mousemove", function(event) {
+                var rect = noButton.getBoundingClientRect();
+                var mouseX = event.clientX;
+                var mouseY = event.clientY;
+                
+                var buttonX = rect.left + rect.width / 2;
+                var buttonY = rect.top + rect.height / 2;
+                
+                var distance = Math.sqrt(Math.pow(mouseX - buttonX, 2) + Math.pow(mouseY - buttonY, 2));
 
-            function change() {
+                if (distance < 100) { // If mouse gets close, move the button
+                    moveNoButton();
+                }
+            });
+
+            function moveNoButton() {
                 var randomIndex = Math.floor(Math.random() * noTexts.length);
-                var randomText = noTexts[randomIndex];
-                no.innerText = randomText;
+                noButton.innerText = noTexts[randomIndex];
 
-                var i = Math.floor(Math.random() * 1000) + 1;
-                var j = Math.floor(Math.random() * 700) + 1;
-                no.style.left = i + "px";
-                no.style.top = j + "px";
+                var maxX = window.innerWidth - noButton.offsetWidth - 20;
+                var maxY = window.innerHeight - noButton.offsetHeight - 20;
+
+                var newX = Math.random() * maxX;
+                var newY = Math.random() * maxY;
+
+                noButton.style.left = newX + "px";
+                noButton.style.top = newY + "px";
 
                 var currentWidth = yesButton.offsetWidth;
-                var currentHeight = yesButton.offsetHeight
-                yesButton.style.width = currentWidth + 30 + "px";
+                var currentHeight = yesButton.offsetHeight;
+                yesButton.style.width = currentWidth + 20 + "px";
                 yesButton.style.height = currentHeight + 10 + "px";
 
                 var randomImageIndex = Math.floor(Math.random() * imageSources.length);
                 valentineImage.src = imageSources[randomImageIndex];
+            }
+
+            function confettiEffect() {
+                const confettiCount = 100;
+                for (let i = 0; i < confettiCount; i++) {
+                    let confetti = document.createElement("div");
+                    confetti.innerHTML = "❤️";
+                    confetti.style.position = "fixed";
+                    confetti.style.left = Math.random() * window.innerWidth + "px";
+                    confetti.style.top = Math.random() * window.innerHeight + "px";
+                    confetti.style.fontSize = Math.random() * 30 + 10 + "px";
+                    confetti.style.opacity = Math.random();
+                    document.body.appendChild(confetti);
+
+                    let animation = confetti.animate([
+                        { transform: "translateY(0px)" },
+                        { transform: `translateY(${window.innerHeight}px)` }
+                    ], {
+                        duration: Math.random() * 3000 + 2000,
+                        iterations: 1,
+                        easing: "ease-in-out"
+                    });
+
+                    animation.onfinish = () => confetti.remove();
+                }
             }
         </script>
     </body>
